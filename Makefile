@@ -181,8 +181,8 @@ UPROGS=\
 	_usertests\
 	_wc\
 	_zombie\
-	_testcount
-	
+	_testcount\
+	_testprodcons\
 	
 
 fs.img: mkfs README $(UPROGS)
