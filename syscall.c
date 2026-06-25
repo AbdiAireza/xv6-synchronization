@@ -137,14 +137,14 @@ static int (*syscalls[])(void) = {
 
 
 
-struct spinlock syscall_count_lock;
+/*struct spinlock syscall_count_lock;*/
 
 
-void
+/*void
 syscallinit(void)
 {
   initlock(&syscall_count_lock, "syscall_count_lock");
-}
+}*/
 
 void
 syscall(void)
@@ -154,9 +154,9 @@ syscall(void)
 
   num = curproc->tf->eax;
   if(num > 0 && num < NELEM(syscalls) && syscalls[num]) {
-    acquire(&syscall_count_lock);
+    /*acquire(&syscall_count_lock);*/
     syscall_count[num]++;
-    release(&syscall_count_lock);
+    /*release(&syscall_count_lock);*/
     curproc->tf->eax = syscalls[num]();
   } else {
     cprintf("%d %s: unknown sys call %d\n",
