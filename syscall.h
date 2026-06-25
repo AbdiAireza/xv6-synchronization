@@ -22,3 +22,6 @@
 #define SYS_close  21
 
 #define SYS_getcount 22
+
+
+#define SYS_getcpucount 23
