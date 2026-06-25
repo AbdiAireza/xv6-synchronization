@@ -89,3 +89,19 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+
+int
+sys_getcount(void)
+{
+  int syscall_num;
+
+  if(argint(0, &syscall_num) < 0)
+    return -1;
+
+  if(syscall_num <= 0 || syscall_num >= 30)
+    return -1;
+
+  extern int syscall_count[];
+  return syscall_count[syscall_num];
+}
