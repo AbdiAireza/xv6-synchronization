@@ -6,6 +6,16 @@
 #include "memlayout.h"
 #include "mmu.h"
 #include "proc.h"
+#include "spinlock.h"
+
+
+#define BUFFER_SIZE 10 
+
+int buffer[BUFFER_SIZE];
+int head = 0;
+int tail = 0;
+int count = 0;
+struct spinlock prodcons_lock;
 
 int
 sys_fork(void)
@@ -145,4 +155,57 @@ sys_getcpucount(void)
 
   extern int syscall_count_cpu[NCPU][30];
   return syscall_count_cpu[cpu_id][syscall_num];
+}
+
+
+
+
+
+int
+sys_produce(void)
+{
+  int val;
+  
+  if(argint(0, &val) < 0)
+    return -1;
+
+  acquire(&prodcons_lock); 
+
+  if(count == BUFFER_SIZE) {
+    
+    release(&prodcons_lock); 
+    return -1; 
+  }
+
+  
+  buffer[tail] = val;
+  tail = (tail + 1) % BUFFER_SIZE;
+  count++;
+
+  release(&prodcons_lock); 
+  return 0; 
+}
+
+
+int
+sys_consume(void)
+{
+  int val;
+
+  acquire(&prodcons_lock); 
+
+  if(count == 0) {
+    
+    release(&prodcons_lock);
+    return -1;
+  }
+
+  
+  val = buffer[head];
+  head = (head + 1) % BUFFER_SIZE;
+  count--;
+
+  release(&prodcons_lock); 
+  
+  return val; 
 }

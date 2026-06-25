@@ -11,6 +11,7 @@ static void mpmain(void)  __attribute__((noreturn));
 extern pde_t *kpgdir;
 extern char end[]; // first address after kernel loaded from ELF file
 /*extern void syscallinit(void);*/
+extern struct spinlock prodcons_lock;
 // Bootstrap processor starts running C code here.
 // Allocate a real stack and switch to it, first
 // doing some setup required for memory allocator to work.
@@ -29,6 +30,7 @@ main(void)
   pinit();         // process table
   tvinit();        // trap vectors
   binit();         // buffer cache
+  initlock(&prodcons_lock, "prodcons_lock");
   fileinit();      // file table
   /*syscallinit();*/
   ideinit();       // disk 
