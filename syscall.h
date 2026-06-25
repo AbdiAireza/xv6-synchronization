@@ -25,3 +25,9 @@
 
 
 #define SYS_getcpucount 23
+
+
+#define SYS_produce 24
+#define SYS_consume 25
+
+

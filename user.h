@@ -28,6 +28,9 @@ int getcount(int);
 
 int getcpucount(int, int);
 
+int produce(int);
+int consume(void);
+
 // ulib.c
 int stat(const char*, struct stat*);
 char* strcpy(char*, const char*);
