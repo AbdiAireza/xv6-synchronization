@@ -2,7 +2,7 @@
 #include "stat.h"
 #include "user.h"
 
-#define ITEMS 5 
+#define ITEMS 5
 
 #define PRODCONS_NUM 3
 
@@ -39,13 +39,9 @@ void safe_print(int is_producer, int id, int val) {
     
     write(1, buf, i);
 }
-
 void producer(int id, int start) {
-    for (int i = 0; i < ITEMS; i++) {
-        while (produce(start + i) == -1) {
-            // sleep(1); 
-        }
-        
+    for (int i = 0; i < ITEMS; i++) {\
+        produce(start + i);
         safe_print(1, id, start + i);
     }
     exit();
@@ -55,13 +51,8 @@ void consumer(int id) {
     int consumed = 0;
     while (consumed < ITEMS) {
         int val = consume();
-        if (val != -1) {
-            
-            safe_print(0, id, val);
-            consumed++;
-        } else {
-            // sleep(1);
-        }
+        safe_print(0, id, val);
+        consumed++;
     }
     exit();
 }
@@ -74,7 +65,8 @@ int main(int argc, char *argv[]) {
     for (int i = 1; i < PRODCONS_NUM + 1; i++){
         if (fork() == 0) consumer(i + PRODCONS_NUM);
     }
-    
+
+
     for(int i = 0; i < 2 * PRODCONS_NUM; i++) {
         wait();
     }

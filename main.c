@@ -27,10 +27,10 @@ main(void)
   ioapicinit();    // another interrupt controller
   consoleinit();   // console hardware
   uartinit();      // serial port
+  initsleeplock(&prodcons_lock, "shayan");
   pinit();         // process table
   tvinit();        // trap vectors
   binit();         // buffer cache
-  initlock(&prodcons_lock, "prodcons_lock");
   fileinit();      // file table
   /*syscallinit();*/
   ideinit();       // disk 
