@@ -4,6 +4,7 @@
 
 #define ITEMS 5 
 
+#define PRODCONS_NUM 3
 
 void safe_print(int is_producer, int id, int val) {
     char buf[64];
@@ -50,9 +51,9 @@ void producer(int id, int start) {
     exit();
 }
 
-void consumer(int id, int count) {
+void consumer(int id) {
     int consumed = 0;
-    while (consumed < count) {
+    while (consumed < ITEMS) {
         int val = consume();
         if (val != -1) {
             
@@ -66,15 +67,15 @@ void consumer(int id, int count) {
 }
 
 int main(int argc, char *argv[]) {
-    
-    if (fork() == 0) producer(1, 1000);
-    if (fork() == 0) producer(2, 2000);
+    for (int i = 1; i < PRODCONS_NUM + 1; i++){
+        if (fork() == 0) producer(i, i * 1000);
+    }
 
+    for (int i = 1; i < PRODCONS_NUM + 1; i++){
+        if (fork() == 0) consumer(i + PRODCONS_NUM);
+    }
     
-    if (fork() == 0) consumer(1, 5);
-    if (fork() == 0) consumer(2, 5);
-
-    for(int i = 0; i < 4; i++) {
+    for(int i = 0; i < 2 * PRODCONS_NUM; i++) {
         wait();
     }
     
