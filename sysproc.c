@@ -18,6 +18,7 @@ int tail = 0;
 int count = 0;
 struct sleeplock prodcons_lock;
 struct spinlock print_lock;
+struct ticketlock ticket_lock;
 
 
 int
@@ -256,5 +257,15 @@ sys_lock_print(void)
     cprintf("%s", str); 
     release(&print_lock);
     
+    return 0;
+}
+
+int sys_ticket_acquire(void) {
+    ticketlock_acquire(&ticket_lock);
+    return 0;
+}
+
+int sys_ticket_release(void) {
+    ticketlock_release(&ticket_lock);
     return 0;
 }

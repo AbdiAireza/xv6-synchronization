@@ -50,3 +50,5 @@ int rwreleaseread(void);
 int rwacquirewrite(void);
 int rwreleasewrite(void);
 int lock_print(char *);
+int ticket_acquire(void);
+int ticket_release(void);

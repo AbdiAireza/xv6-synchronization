@@ -35,4 +35,6 @@
 #define SYS_rwacquirewrite   29
 #define SYS_rwreleasewrite   30
 #define SYS_lock_print   31
+#define SYS_ticket_acquire   32
+#define SYS_ticket_release   33
 

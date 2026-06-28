@@ -170,3 +170,33 @@ void rwlock_release_write(struct rwlock *rw) {
   wakeup(rw); 
   release(&rw->lock);
 }
+
+
+
+void ticketLock_init(struct ticketlock *tl, char* name){
+  initlock(&(tl->lock), "ticket_splin_lock");
+  tl->ticket = 0;
+  tl->turn = 0;
+  tl->name = name;
+}
+
+
+void ticketlock_acquire(struct ticketlock *lk) {
+    acquire(&lk->lock);
+
+    cprintf("Process %d acquired ticket\n", myproc()->pid);
+    int my_ticket = lk->ticket;
+    lk->ticket++;
+    cprintf("Process %d got ticket %d\n", myproc()->pid, my_ticket);
+    release(&lk->lock); 
+    while(lk->turn != my_ticket);
+    // entering important area
+    cprintf("Process %d with ticket %d entered important area.\n", myproc()->pid, my_ticket);
+
+}
+
+void ticketlock_release(struct ticketlock *lk) {
+    acquire(&lk->lock);
+    lk->turn++;
+    release(&lk->lock);
+}

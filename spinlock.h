@@ -15,3 +15,10 @@ struct rwlock {
   int writer_waiting;
   struct spinlock lock;
 };
+
+struct ticketlock {
+  uint ticket;
+  uint turn;
+  char* name;
+  struct spinlock lock;
+};

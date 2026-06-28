@@ -184,6 +184,7 @@ UPROGS=\
 	_testcount\
 	_testprodcons\
 	_testrw\
+	_test_ticket\
 	
 
 fs.img: mkfs README $(UPROGS)
