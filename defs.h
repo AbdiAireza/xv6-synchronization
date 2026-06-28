@@ -133,6 +133,13 @@ void            release(struct spinlock*);
 void            pushcli(void);
 void            popcli(void);
 
+struct rwlock;
+void rwlock_init(struct rwlock *rw);
+void rwlock_acquire_read(struct rwlock *rw);
+void rwlock_release_read(struct rwlock *rw);
+void rwlock_acquire_write(struct rwlock *rw);
+void rwlock_release_write(struct rwlock *rw);
+
 // sleeplock.c
 void            acquiresleep(struct sleeplock*);
 void            releasesleep(struct sleeplock*);

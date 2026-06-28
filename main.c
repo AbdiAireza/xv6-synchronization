@@ -27,7 +27,7 @@ main(void)
   ioapicinit();    // another interrupt controller
   consoleinit();   // console hardware
   uartinit();      // serial port
-  initsleeplock(&prodcons_lock, "shayan");
+  initlock(&prodcons_lock, "shayan");
   pinit();         // process table
   tvinit();        // trap vectors
   binit();         // buffer cache

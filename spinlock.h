@@ -9,3 +9,9 @@ struct spinlock {
                      // that locked the lock.
 };
 
+struct rwlock {
+  int readers;
+  int writer_active;
+  int writer_waiting;
+  struct spinlock lock;
+};

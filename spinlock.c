@@ -123,4 +123,50 @@ popcli(void)
   if(mycpu()->ncli == 0 && mycpu()->intena)
     sti();
 }
+void rwlock_init(struct rwlock *rw) {
+  initlock(&rw->lock, "rwlock");
+  rw->readers = 0;
+  rw->writer_active = 0;
+  rw->writer_waiting = 0;
+}
 
+void rwlock_acquire_read(struct rwlock *rw) {
+  acquire(&rw->lock);
+  
+  while(rw->writer_active || rw->writer_waiting > 0) {
+    sleep(rw, &rw->lock);
+  }
+  
+  rw->readers++;
+  release(&rw->lock);
+}
+
+void rwlock_release_read(struct rwlock *rw) {
+  acquire(&rw->lock);
+  rw->readers--;
+  
+  if(rw->readers == 0) {
+    wakeup(rw);
+  }
+  
+  release(&rw->lock);
+}
+
+void rwlock_acquire_write(struct rwlock *rw) {
+  acquire(&rw->lock);
+  rw->writer_waiting++; 
+  while(rw->readers > 0 || rw->writer_active) {
+    sleep(rw, &rw->lock);
+  }
+  
+  rw->writer_waiting--;
+  rw->writer_active = 1;
+  release(&rw->lock);
+}
+
+void rwlock_release_write(struct rwlock *rw) {
+  acquire(&rw->lock);
+  rw->writer_active = 0;
+  wakeup(rw); 
+  release(&rw->lock);
+}
