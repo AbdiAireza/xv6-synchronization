@@ -44,3 +44,8 @@ void* memset(void*, int, uint);
 void* malloc(uint);
 void free(void*);
 int atoi(const char*);
+int rwinit(void);
+int rwacquireread(void);
+int rwreleaseread(void);
+int rwacquirewrite(void);
+int rwreleasewrite(void);

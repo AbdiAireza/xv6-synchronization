@@ -183,6 +183,7 @@ UPROGS=\
 	_zombie\
 	_testcount\
 	_testprodcons\
+	_testrw\
 	
 
 fs.img: mkfs README $(UPROGS)

@@ -117,6 +117,11 @@ extern int sys_write(void);
 extern int sys_uptime(void);
 extern int sys_consume(void);
 extern int sys_produce(void);
+extern int sys_rwinit(void);
+extern int sys_rwacquireread(void);
+extern int sys_rwreleaseread(void);
+extern int sys_rwacquirewrite(void);
+extern int sys_rwreleasewrite(void);
 
 static int (*syscalls[])(void) = {
 [SYS_fork]    sys_fork,
@@ -144,6 +149,11 @@ static int (*syscalls[])(void) = {
 [SYS_getcpucount] sys_getcpucount,
 [SYS_consume] sys_consume,
 [SYS_produce] sys_produce,
+[SYS_rwinit]          sys_rwinit,
+[SYS_rwacquireread]   sys_rwacquireread,
+[SYS_rwreleaseread]   sys_rwreleaseread,
+[SYS_rwacquirewrite]  sys_rwacquirewrite,
+[SYS_rwreleasewrite]  sys_rwreleasewrite,
 };
 
 

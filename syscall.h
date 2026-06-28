@@ -29,5 +29,9 @@
 
 #define SYS_produce 24
 #define SYS_consume 25
-
+#define SYS_rwinit           26
+#define SYS_rwacquireread    27
+#define SYS_rwreleaseread    28
+#define SYS_rwacquirewrite   29
+#define SYS_rwreleasewrite   30
 

@@ -208,3 +208,29 @@ sys_consume(void)
   
   return val; 
 }
+struct rwlock test_lock;
+
+int sys_rwinit(void) {
+  rwlock_init(&test_lock);
+  return 0;
+}
+
+int sys_rwacquireread(void) {
+  rwlock_acquire_read(&test_lock);
+  return 0;
+}
+
+int sys_rwreleaseread(void) {
+  rwlock_release_read(&test_lock);
+  return 0;
+}
+
+int sys_rwacquirewrite(void) {
+  rwlock_acquire_write(&test_lock);
+  return 0;
+}
+
+int sys_rwreleasewrite(void) {
+  rwlock_release_write(&test_lock);
+  return 0;
+}
