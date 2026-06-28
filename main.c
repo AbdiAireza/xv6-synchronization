@@ -12,6 +12,7 @@ extern pde_t *kpgdir;
 extern char end[]; // first address after kernel loaded from ELF file
 /*extern void syscallinit(void);*/
 extern struct sleeplock prodcons_lock;
+extern struct spinlock print_lock;
 // Bootstrap processor starts running C code here.
 // Allocate a real stack and switch to it, first
 // doing some setup required for memory allocator to work.
@@ -28,6 +29,7 @@ main(void)
   consoleinit();   // console hardware
   uartinit();      // serial port
   initsleeplock(&prodcons_lock, "shayan");
+  initlock(&print_lock, "print_lock");
   pinit();         // process table
   tvinit();        // trap vectors
   binit();         // buffer cache

@@ -34,4 +34,5 @@
 #define SYS_rwreleaseread    28
 #define SYS_rwacquirewrite   29
 #define SYS_rwreleasewrite   30
+#define SYS_lock_print   31
 

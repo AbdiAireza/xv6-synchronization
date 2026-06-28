@@ -17,6 +17,7 @@ int head = 0;
 int tail = 0;
 int count = 0;
 struct sleeplock prodcons_lock;
+struct spinlock print_lock;
 
 
 int
@@ -233,4 +234,27 @@ int sys_rwacquirewrite(void) {
 int sys_rwreleasewrite(void) {
   rwlock_release_write(&test_lock);
   return 0;
+}
+
+int
+sys_lock_print(void)
+{
+    char str[128];
+    int i;
+    char *user_str;
+    
+    if(argptr(0, (void*)&user_str, sizeof(char*)) < 0)
+        return -1;
+    
+    for(i = 0; i < sizeof(str) - 1; i++) {
+        if(user_str[i] == '\0') break;
+        str[i] = user_str[i];
+    }
+    str[i] = '\0';
+    
+    acquire(&print_lock);
+    cprintf("%s", str); 
+    release(&print_lock);
+    
+    return 0;
 }

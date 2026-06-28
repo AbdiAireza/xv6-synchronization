@@ -122,6 +122,7 @@ extern int sys_rwacquireread(void);
 extern int sys_rwreleaseread(void);
 extern int sys_rwacquirewrite(void);
 extern int sys_rwreleasewrite(void);
+extern int sys_lock_print(void);
 
 static int (*syscalls[])(void) = {
 [SYS_fork]    sys_fork,
@@ -154,6 +155,7 @@ static int (*syscalls[])(void) = {
 [SYS_rwreleaseread]   sys_rwreleaseread,
 [SYS_rwacquirewrite]  sys_rwacquirewrite,
 [SYS_rwreleasewrite]  sys_rwreleasewrite,
+[SYS_lock_print]  sys_lock_print,
 };
 
 

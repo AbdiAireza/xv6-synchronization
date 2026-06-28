@@ -49,3 +49,4 @@ int rwacquireread(void);
 int rwreleaseread(void);
 int rwacquirewrite(void);
 int rwreleasewrite(void);
+int lock_print(char *);
